@@ -1,2 +1,11 @@
 # Sketcher
-Etch-a-Sketch built in HTML, CSS and Javascript
+#### Live Demo: <br>
+This project is a implementation of the toy known as the Etch-a-Sketch. The languages used for this project consist of HTML, CSS, and Javascript.
+
+## Learning Outcome
+
+### HTML
+
+### CSS
+
+### Javascript
