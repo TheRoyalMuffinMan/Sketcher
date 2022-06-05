@@ -1,54 +1,85 @@
+const DEFAULT_STYLE = "solid";
+const DEFAULT_COLOR = "black";
+const DEFAULT_SIZE = 25;
+
+let currStyle = DEFAULT_STYLE;
+let currColor = DEFAULT_COLOR;
+let currSize = DEFAULT_SIZE;
+let drawing = false
+
 const grid = document.querySelector(".grid");
 const colorSelector = document.querySelector("#color-selector")
 const slider = document.querySelector(".range-slider");
 const infoSlider = document.querySelector(".slider h1");
-const btns = document.querySelectorAll("button");
-let currColor = "black";
-let currSize = 25;
+const stylingButtons = document.querySelectorAll(".color-buttons button");
+const resetButton = document.querySelector("#reset");
 
+function createGrid(size) {
+    grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    grid.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
-function createGrid() {
-    grid.style.gridTemplateColumns = `repeat(${currSize}, 1fr)`;
-    grid.style.gridTemplateRows = `repeat(${currSize}, 1fr)`;
-
-    for (let i = 1; i <= currSize * currSize; i++) {
+    for (let i = 1; i <= size * size; i++) {
         const box = document.createElement("div");
         box.classList.add(`box-${i}`);
-        box.addEventListener("mouseover", colorIt);
-        box.addEventListener("touchstart", colorIt);
+        box.addEventListener("mouseover", draw);
+        box.addEventListener("mousedown", draw);
         grid.appendChild(box);
     }
 }
 
-function colorIt(event) {
-    event.target.style.backgroundColor = currColor;
+function draw(event) {
+    if (event.type == "mouseover" && !drawing) return;
+    if (currStyle == "solid") {
+        event.target.style.backgroundColor = currColor;
+    } else if (currStyle == "colorful") {
+        let random = Math.round(0xffffff * Math.random());
+        let r = random >> 16;
+        let g = random >> 8 & 255;
+        let b = random & 255;
+        event.target.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+    } else {
+        event.target.style.backgroundColor = "white";
+    }
 }
 
-function changeColor(event) {
-    let color = event.target.value;
-
+function reset() {
+    currStyle = DEFAULT_STYLE;
+    currColor = DEFAULT_COLOR;
+    currSize = DEFAULT_SIZE;
+    drawing = false;
+    grid.innerHTML = "";
+    createGrid(currSize);
 }
-
-function changeSize(event) {
-    let size = event.target.value;
-    infoSlider.textContent = `Grid: ${size} x ${size}`; 
-    reset(event);
-}
-
-function reset(event) {
-
-}
-
-slider.addEventListener("mouseup", changeSize);
 
 function sketcher() {
-    createGrid();
-    btns.forEach(btn => {
-        btn.addEventListener("onclick", (btn.value != "reset") ? changeColor : reset);
+    // Grid controls
+    grid.addEventListener('mousedown', () => drawing = true);
+    grid.addEventListener('mouseup', () => drawing = false);
+    
+    slider.addEventListener("mouseup", function(event){
+        currSize = event.target.value;
+        infoSlider.textContent = `Grid: ${currSize} x ${currSize}`;
+        createGrid(currSize);
+    });
+
+    // Reset
+    resetButton.addEventListener("click", reset);
+
+    console.log(stylingButtons)
+    // Colors and Styling
+    stylingButtons.forEach(styleBtn => {
+        styleBtn.addEventListener("click", function(event) {
+            console.log(event.target.value)
+            currStyle = event.target.value;
+        });
+    });
+    colorSelector.addEventListener("input", function(event) {
+        console.log(event.target.value)
+        currColor = event.target.value;
     });
 }
 
 window.onload = () => {
+    createGrid(DEFAULT_SIZE);
     sketcher();
-    
 }
