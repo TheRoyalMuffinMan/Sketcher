@@ -44,7 +44,6 @@ function draw(event) {
 
 function reset() {
     currStyle = DEFAULT_STYLE;
-    currColor = DEFAULT_COLOR;
     currSize = DEFAULT_SIZE;
     drawing = false;
     grid.innerHTML = "";
