@@ -21,6 +21,7 @@ function createGrid(size) {
     for (let i = 1; i <= size * size; i++) {
         const box = document.createElement("div");
         box.classList.add("box");
+        box.addEventListener("mousedown", draw);
         box.addEventListener("mouseover", draw);
         grid.appendChild(box);
     }
