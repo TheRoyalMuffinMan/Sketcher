@@ -155,8 +155,8 @@ main {
     background-color: 	#414a4c;
 }
 
-/* Reset Section (in panel) */
-.reset {
+/* Clear Section (in panel) */
+.clear {
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -164,7 +164,7 @@ main {
     border-top: 0.3em solid black;
 }
 
-.reset button {
+.clear button {
     height: 1.7em;
     width: 5em;
     font-size: 2.5em;
@@ -175,7 +175,7 @@ main {
     cursor: pointer;
 }
 
-.reset button:hover {
+.clear button:hover {
     background-color: 	#414a4c;
 }
 

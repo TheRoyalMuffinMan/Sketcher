@@ -6,7 +6,7 @@ const grid = document.querySelector(".grid");
 const colorSelector = document.querySelector("#color-selector")
 const slider = document.querySelector(".range-slider");
 const infoSlider = document.querySelector(".slider h1");
-const resetButton = document.querySelector("#reset");
+const clearButton = document.querySelector("#clear");
 const stylingButtons = document.querySelectorAll(".color-buttons button");
 
 let currStyle = DEFAULT_STYLE;
@@ -43,7 +43,7 @@ function draw(event) {
     }
 }
 
-function reset() {
+function clear() {
     currStyle = DEFAULT_STYLE;
     currSize = DEFAULT_SIZE;
     drawing = false;
@@ -62,8 +62,8 @@ function sketcher() {
         createGrid(currSize);
     });
 
-    // Reset
-    resetButton.addEventListener("click", reset);
+    // Clear
+    clearButton.addEventListener("click", clear);
 
     // Colors and Styling
     stylingButtons.forEach(styleBtn => {
