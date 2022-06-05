@@ -185,6 +185,11 @@ main {
     height: 38em;
     width: 30em;
     border-radius: 0.3em;
+    border-color: white;
     box-shadow: 3.9px 7.8px 7.8px hsl(0deg 0% 0% / 0.38);
     background-color: white;
+    user-select: none;
+}
+.box {
+    user-select: none;
 }

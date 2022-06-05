@@ -1,18 +1,18 @@
 const DEFAULT_STYLE = "solid";
 const DEFAULT_COLOR = "black";
-const DEFAULT_SIZE = 25;
-
-let currStyle = DEFAULT_STYLE;
-let currColor = DEFAULT_COLOR;
-let currSize = DEFAULT_SIZE;
-let drawing = false
+const DEFAULT_SIZE = 32;
 
 const grid = document.querySelector(".grid");
 const colorSelector = document.querySelector("#color-selector")
 const slider = document.querySelector(".range-slider");
 const infoSlider = document.querySelector(".slider h1");
-const stylingButtons = document.querySelectorAll(".color-buttons button");
 const resetButton = document.querySelector("#reset");
+const stylingButtons = document.querySelectorAll(".color-buttons button");
+
+let currStyle = DEFAULT_STYLE;
+let currColor = DEFAULT_COLOR;
+let currSize = DEFAULT_SIZE;
+let drawing = false
 
 function createGrid(size) {
     grid.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
@@ -20,15 +20,15 @@ function createGrid(size) {
 
     for (let i = 1; i <= size * size; i++) {
         const box = document.createElement("div");
-        box.classList.add(`box-${i}`);
+        box.classList.add("box");
         box.addEventListener("mouseover", draw);
-        box.addEventListener("mousedown", draw);
         grid.appendChild(box);
     }
 }
 
 function draw(event) {
-    if (event.type == "mouseover" && !drawing) return;
+    event.preventDefault();
+    if (!drawing) return;
     if (currStyle == "solid") {
         event.target.style.backgroundColor = currColor;
     } else if (currStyle == "colorful") {
@@ -53,19 +53,18 @@ function reset() {
 
 function sketcher() {
     // Grid controls
-    grid.addEventListener('mousedown', () => drawing = true);
-    grid.addEventListener('mouseup', () => drawing = false);
-    
+    document.body.onmousedown = () => drawing = true;
+    document.body.onmouseup = () => drawing = false;
     slider.addEventListener("mouseup", function(event){
         currSize = event.target.value;
         infoSlider.textContent = `Grid: ${currSize} x ${currSize}`;
+        grid.innerHTML = "";
         createGrid(currSize);
     });
 
     // Reset
     resetButton.addEventListener("click", reset);
 
-    console.log(stylingButtons)
     // Colors and Styling
     stylingButtons.forEach(styleBtn => {
         styleBtn.addEventListener("click", function(event) {
