@@ -44,8 +44,6 @@ function draw(event) {
 }
 
 function clear() {
-    currStyle = DEFAULT_STYLE;
-    currSize = DEFAULT_SIZE;
     drawing = false;
     grid.innerHTML = "";
     createGrid(currSize);
